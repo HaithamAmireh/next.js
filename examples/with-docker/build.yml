@@ -6,17 +6,17 @@
     - name: Clone the repository
       git:
         repo: 'https://github.com/HaithamAmireh/next.js'
-        dest: ~
+        dest: /opt/next.js
         version: main  # Change to your desired branch/tag
 
     - name: Build Docker image
       docker_image:
-        path: ~/next.js/examples/with-docer
+        path: /opt/next.js/examples/with-docer
         name: next-sema
         tag: latest
         state: present
 
     - name: Remove the cloned repository
       file:
-        path: ~/next.js
+        path: /opt/next.js
         state: absent
