@@ -3,18 +3,6 @@
   hosts: all
   become: true
   tasks:
-    - name: Ensure git is installed
-      apt:
-        name: git
-        state: present
-      when: ansible_os_family == "Debian"
-
-    - name: Ensure Docker is installed
-      apt:
-        name: docker.io
-        state: present
-      when: ansible_os_family == "Debian"
-
     - name: Clone the repository
       git:
         repo: 'https://github.com/HaithamAmireh/next.js'
