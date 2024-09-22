@@ -1,0 +1,34 @@
+---
+- name: Build Docker Image from Git Repository
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure git is installed
+      apt:
+        name: git
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure Docker is installed
+      apt:
+        name: docker.io
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Clone the repository
+      git:
+        repo: 'https://github.com/HaithamAmireh/next.js'
+        dest: /tmp/
+        version: main  # Change to your desired branch/tag
+
+    - name: Build Docker image
+      docker_image:
+        path: /tmp/examples/with-docer
+        name: next-sema
+        tag: latest
+        state: present
+
+    - name: Remove the cloned repository
+      file:
+        path: /tmp/next.js
+        state: absent
